@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="id">
+ <head>
+<meta property="og:title" content="Game Education">
+
+<meta property="og:description" content="dibuat oleh MIN 3 Bandar Lampung ">
+
+<meta property="og:image" content="https://iili.io/fmnXi4j.png">
+
+<meta property="og:url" content="#">
+
+<meta property="og:type" content="website">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarik Tambang Educational Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&amp;family=Nunito:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    * {
+      font-family: 'Nunito', sans-serif;
+    }
+    
+    .title-font {
+      font-family: 'Fredoka One', cursive;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px rgba(255, 193, 7, 0.9), 0 0 60px rgba(255, 193, 7, 0.4);
+      }
+    }
+    
+    .pulse-button {
+      animation: pulse-glow 1.5s ease-in-out infinite;
+    }
+    
+    .pulse-button:hover {
+      animation: pulse-glow 0.5s ease-in-out infinite;
+    }
+    
+    @keyframes bounce-in {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .bounce-in {
+      animation: bounce-in 0.6s ease-out forwards;
+    }
+    
+    @keyframes rope-pull-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-20px); }
+    }
+    
+    @keyframes rope-pull-right {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(20px); }
+    }
+    
+    .pull-left {
+      animation: rope-pull-left 0.3s ease-out forwards;
+    }
+    
+    .pull-right {
+      animation: rope-pull-right 0.3s ease-out forwards;
+    }
+    
+    @keyframes celebrate {
+      0%, 100% { transform: rotate(-5deg) scale(1); }
+      25% { transform: rotate(5deg) scale(1.1); }
+      50% { transform: rotate(-5deg) scale(1); }
+      75% { transform: rotate(5deg) scale(1.1); }
+    }
+    
+    .celebrate {
+      animation: celebrate 0.5s ease-in-out infinite;
+    }
+    
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      animation: confetti-fall 3s linear forwards;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .float {
+      animation: float 2s ease-in-out infinite;
+    }
+    
+    .option-btn {
+      transition: all 0.2s ease;
+    }
+    
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+    
+    .correct-answer {
+      background: linear-gradient(135deg, #10b981, #059669) !important;
+      color: white !important;
+      transform: scale(1.05);
+    }
+    
+    .wrong-answer {
+      background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+      color: white !important;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body style="background: linear-gradient(135deg, #87CEEB 0%, #b3e0f2 50%, #e0f4fc 100%); min-height: 100vh; margin: 0;">
+  <div id="app" style="min-height: 100vh; width: 100%;"><!-- Welcome Screen -->
+   <div id="welcome-screen" style="min-height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;">
+    <div class="bounce-in" style="background: white; border-radius: 24px; box-shadow: 0 20px 25px rgba(0,0,0,0.1); padding: 48px 32px; max-width: 600px; width: 100%; text-align: center; border: 4px solid #fbbf24;"><!-- Decorative Elements -->
+     <div style="display: flex; justify-content: center; gap: 16px; margin-bottom: 24px;"><span class="float" style="font-size: 48px; animation-delay: 0s;">🎮</span> <span class="float" style="font-size: 48px; animation-delay: 0.3s;">🏆</span> <span class="float" style="font-size: 48px; animation-delay: 0.6s;">📚</span>
+     </div>
+     <h1 class="title-font" style="font-size: 36px; background: linear-gradient(to right, #2563eb, #9333ea, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 24px; line-height: 1.2;">Sejarah Kebudayaan Islam Kelas III MIN 3 BALAM</h1>
+     <div style="margin-bottom: 32px;">
+      <p style="color: #4b5563; font-size: 18px; margin-bottom: 8px;">🎯 Permainan Tarik Tambang Edukasi 🎯</p>
+      <p style="color: #6b7280;">Jawab pertanyaan dengan benar untuk memenangkan permainan!</p>
+     </div><!-- Mascot Preview -->
+     <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin-bottom: 32px;">
+      <div style="text-align: center;">
+       <div style="width: 80px; height: 80px; background: linear-gradient(to bottom right, #f87171, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1);"><span style="font-size: 36px;">👦</span>
+       </div>
+       <p style="color: #dc2626; font-weight: bold; margin-top: 8px;">Tim Merah</p>
+      </div><span style="font-size: 24px;">⚔️</span>
+      <div style="text-align: center;">
+       <div style="width: 80px; height: 80px; background: linear-gradient(to bottom right, #60a5fa, #2563eb); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1);"><span style="font-size: 36px;">👧</span>
+       </div>
+       <p style="color: #2563eb; font-weight: bold; margin-top: 8px;">Tim Biru</p>
+      </div>
+     </div><button id="start-btn" onclick="startGame()" class="pulse-button" style="background: linear-gradient(to right, #fbbf24, #f59e0b, #f97316); color: white; font-size: 20px; font-weight: bold; padding: 16px 40px; border-radius: 9999px; border: 4px solid #fcd34d; cursor: pointer; box-shadow: 0 10px 15px rgba(0,0,0,0.1); transition: all 0.3s ease;"> 🚀 MULAI BERMAIN 🚀 </button>
+    </div>
+   </div><!-- Game Screen -->
+   <div id="game-screen" style="display: none; min-height: 100vh; width: 100%; padding: 16px 24px;">
+    <div style="max-width: 1400px; margin: 0 auto;"><!-- Score Header -->
+     <div style="background: white; border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); padding: 16px; margin-bottom: 24px; border: 4px solid #fbbf24;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+       <div style="text-align: center; flex: 1;">
+        <div style="background: linear-gradient(to right, #f87171, #dc2626); color: white; border-radius: 12px; padding: 8px 16px; display: inline-block;"><span style="font-weight: bold;">Tim Merah</span> <span id="red-score" style="margin-left: 8px; font-size: 24px; font-weight: bold;">0</span>
+        </div>
+       </div>
+       <div style="text-align: center; padding: 0 16px;"><span class="title-font" style="font-size: 20px; color: #4b5563;">Soal</span>
+        <div style="font-size: 28px; font-weight: bold; color: #9333ea;"><span id="current-question">1</span>/<span id="total-questions">5</span>
+        </div>
+       </div>
+       <div style="text-align: center; flex: 1;">
+        <div style="background: linear-gradient(to right, #60a5fa, #2563eb); color: white; border-radius: 12px; padding: 8px 16px; display: inline-block;"><span style="font-weight: bold;">Tim Biru</span> <span id="blue-score" style="margin-left: 8px; font-size: 24px; font-weight: bold;">0</span>
+        </div>
+       </div>
+      </div>
+     </div><!-- Tug of War Visualization -->
+     <div style="background: white; border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); padding: 24px; margin-bottom: 24px; border: 4px solid #fbbf24; overflow: hidden;">
+      <div id="tug-container" style="position: relative; display: flex; align-items: center; justify-content: center;"><!-- Red Person -->
+       <div id="red-person" style="display: flex; flex-direction: column; align-items: center; transition: transform 0.5s ease;">
+        <svg width="100" height="140" viewbox="0 0 100 140"><ellipse cx="50" cy="95" rx="25" ry="35" fill="#ef4444" /> <line x1="25" y1="85" x2="0" y2="75" stroke="#fbbf24" stroke-width="8" stroke-linecap="round" /> <line x1="75" y1="85" x2="100" y2="75" stroke="#fbbf24" stroke-width="8" stroke-linecap="round" /> <circle cx="50" cy="45" r="25" fill="#fbbf24" /> <ellipse cx="50" cy="30" rx="28" ry="12" fill="#dc2626" /> <rect x="22" y="25" width="56" height="10" fill="#dc2626" /> <rect x="30" y="18" width="40" height="12" rx="3" fill="#b91c1c" /> <circle cx="40" cy="45" r="4" fill="#1f2937" /> <circle cx="60" cy="45" r="4" fill="#1f2937" /> <path d="M 40 58 Q 50 68 60 58" stroke="#1f2937" stroke-width="3" fill="none" /> <rect x="35" y="125" width="10" height="15" rx="3" fill="#1f2937" /> <rect x="55" y="125" width="10" height="15" rx="3" fill="#1f2937" />
+        </svg><span style="margin-top: 8px; font-weight: bold; color: #dc2626; font-size: 16px;">Tim Merah</span>
+       </div><!-- Rope -->
+       <div id="rope-container" style="margin: 0 16px; position: relative; transition: transform 0.5s ease;">
+        <div style="display: flex; align-items: center;">
+         <div style="width: 100px; height: 16px; background: linear-gradient(to right, #b45309, #92400e, #b45309); border-radius: 8px 0 0 8px;"></div>
+         <div id="rope-marker" style="width: 32px; height: 32px; background: linear-gradient(to bottom right, #fbbf24, #f97316); border-radius: 50%; border: 4px solid white; box-shadow: 0 10px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; z-index: 10; transition: transform 0.5s ease;"><span style="color: white; font-weight: bold;">⚡</span>
+         </div>
+         <div style="width: 100px; height: 16px; background: linear-gradient(to right, #b45309, #92400e, #b45309); border-radius: 0 8px 8px 0;"></div>
+        </div>
+        <div style="position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%); width: 8px; height: 32px; background: #9ca3af;"></div>
+       </div><!-- Blue Person -->
+       <div id="blue-person" style="display: flex; flex-direction: column; align-items: center; transition: transform 0.5s ease;">
+        <svg width="100" height="140" viewbox="0 0 100 140"><ellipse cx="50" cy="95" rx="25" ry="35" fill="#3b82f6" /> <line x1="25" y1="85" x2="0" y2="75" stroke="#fbbf24" stroke-width="8" stroke-linecap="round" /> <line x1="75" y1="85" x2="100" y2="75" stroke="#fbbf24" stroke-width="8" stroke-linecap="round" /> <circle cx="50" cy="45" r="25" fill="#fbbf24" /> <ellipse cx="50" cy="30" rx="28" ry="12" fill="#2563eb" /> <rect x="22" y="25" width="56" height="10" fill="#2563eb" /> <rect x="30" y="18" width="40" height="12" rx="3" fill="#1d4ed8" /> <circle cx="40" cy="45" r="4" fill="#1f2937" /> <circle cx="60" cy="45" r="4" fill="#1f2937" /> <path d="M 40 58 Q 50 68 60 58" stroke="#1f2937" stroke-width="3" fill="none" /> <rect x="35" y="125" width="10" height="15" rx="3" fill="#1f2937" /> <rect x="55" y="125" width="10" height="15" rx="3" fill="#1f2937" />
+        </svg><span style="margin-top: 8px; font-weight: bold; color: #2563eb; font-size: 16px;">Tim Biru</span>
+       </div>
+      </div><!-- Rope Position Indicator -->
+      <div style="margin-top: 24px; display: flex; justify-content: center; align-items: center; gap: 8px;"><span style="color: #ef4444; font-weight: bold;">◀️ Merah</span>
+       <div style="display: flex; gap: 4px;">
+        <div id="pos-1" style="width: 16px; height: 16px; border-radius: 50%; background: #d1d5db; transition: background-color 0.3s ease;"></div>
+        <div id="pos-2" style="width: 16px; height: 16px; border-radius: 50%; background: #d1d5db; transition: background-color 0.3s ease;"></div>
+        <div id="pos-3" style="width: 16px; height: 16px; border-radius: 50%; background: #fbbf24; transition: background-color 0.3s ease;"></div>
+        <div id="pos-4" style="width: 16px; height: 16px; border-radius: 50%; background: #d1d5db; transition: background-color 0.3s ease;"></div>
+        <div id="pos-5" style="width: 16px; height: 16px; border-radius: 50%; background: #d1d5db; transition: background-color 0.3s ease;"></div>
+       </div><span style="color: #3b82f6; font-weight: bold;">Biru ▶️</span>
+      </div>
+     </div><!-- Questions Area -->
+     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;"><!-- Red Team Question (Left) -->
+      <div style="background: linear-gradient(to bottom right, #fef2f2, #fee2e2); border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); padding: 24px; border: 4px solid #f87171;">
+       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;"><span style="font-size: 24px;">🔴</span>
+        <h3 class="title-font" style="font-size: 20px; color: #dc2626;">Soal Tim Merah</h3>
+       </div>
+       <p id="red-question" style="color: #1f2937; font-weight: 600; font-size: 16px; margin-bottom: 16px; min-height: 64px;">Loading...</p>
+       <div id="red-options" style="display: flex; flex-direction: column; gap: 12px;"><!-- Options will be inserted here -->
+       </div>
+       <div id="red-feedback" style="margin-top: 16px; text-align: center; font-weight: bold; font-size: 16px; display: none;"></div>
+      </div><!-- Blue Team Question (Right) -->
+      <div style="background: linear-gradient(to bottom right, #eff6ff, #dbeafe); border-radius: 16px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); padding: 24px; border: 4px solid #60a5fa;">
+       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;"><span style="font-size: 24px;">🔵</span>
+        <h3 class="title-font" style="font-size: 20px; color: #2563eb;">Soal Tim Biru</h3>
+       </div>
+       <p id="blue-question" style="color: #1f2937; font-weight: 600; font-size: 16px; margin-bottom: 16px; min-height: 64px;">Loading...</p>
+       <div id="blue-options" style="display: flex; flex-direction: column; gap: 12px;"><!-- Options will be inserted here -->
+       </div>
+       <div id="blue-feedback" style="margin-top: 16px; text-align: center; font-weight: bold; font-size: 16px; display: none;"></div>
+      </div>
+     </div><!-- Navigation Button -->
+     <div style="text-align: center; margin-top: 24px;"><button id="next-btn" onclick="nextQuestion()" class="pulse-button" style="display: none; background: linear-gradient(to right, #fbbf24, #f59e0b, #f97316); color: white; font-size: 18px; font-weight: bold; padding: 16px 40px; border-radius: 9999px; border: 4px solid #fcd34d; cursor: pointer; box-shadow: 0 10px 15px rgba(0,0,0,0.1); transition: all 0.3s ease;"> Lanjut ke Soal Berikutnya ➡️ </button>
+     </div>
+    </div>
+   </div><!-- Result Screen -->
+   <div id="result-screen" style="display: none; min-height: 100vh; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px;">
+    <div id="confetti-container"></div>
+    <div class="bounce-in" style="background: white; border-radius: 24px; box-shadow: 0 20px 25px rgba(0,0,0,0.1); padding: 48px 32px; max-width: 600px; width: 100%; text-align: center; border: 4px solid #fbbf24;">
+     <h2 class="title-font" style="font-size: 32px; color: #9333ea; margin-bottom: 24px;">🏆 PERMAINAN SELESAI! 🏆</h2>
+     <div id="winner-display" style="margin-bottom: 32px;"><!-- Winner content will be inserted here -->
+     </div>
+     <div style="display: flex; justify-content: center; gap: 32px; margin-bottom: 32px;">
+      <div style="text-align: center;">
+       <div style="width: 96px; height: 96px; background: linear-gradient(to bottom right, #f87171, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1); margin-bottom: 8px;"><span style="font-size: 48px;">👦</span>
+       </div>
+       <p style="font-weight: bold; color: #dc2626;">Tim Merah</p>
+       <p id="final-red-score" style="font-size: 28px; font-weight: bold; color: #dc2626;">0</p>
+      </div>
+      <div style="text-align: center;">
+       <div style="width: 96px; height: 96px; background: linear-gradient(to bottom right, #60a5fa, #2563eb); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1); margin-bottom: 8px;"><span style="font-size: 48px;">👧</span>
+       </div>
+       <p style="font-weight: bold; color: #2563eb;">Tim Biru</p>
+       <p id="final-blue-score" style="font-size: 28px; font-weight: bold; color: #2563eb;">0</p>
+      </div>
+     </div><button onclick="restartGame()" class="pulse-button" style="background: linear-gradient(to right, #fbbf24, #f59e0b, #f97316); color: white; font-size: 18px; font-weight: bold; padding: 16px 40px; border-radius: 9999px; border: 4px solid #fcd34d; cursor: pointer; box-shadow: 0 10px 15px rgba(0,0,0,0.1); transition: all 0.3s ease;"> 🔄 MAIN LAGI 🔄 </button>
+    </div>
+   </div>
+  </div>
+  <script>
+    // Game State
+    let gameState = {
+      currentQuestionIndex: 0,
+      redScore: 0,
+      blueScore: 0,
+      ropePosition: 0,
+      redAnswered: false,
+      blueAnswered: false,
+      questions: []
+    };
+
+    // CARA MENAMBAH SOAL:
+    // 1. Salin format di bawah
+    // 2. Ganti "red" atau "blue" sesuai tim
+    // 3. Isi pertanyaan dan 4 pilihan jawaban
+    // 4. Nomor "correct" adalah jawaban benar (0-3, dimulai dari A)
+    //
+    // CONTOH FORMAT:
+    // {
+    //   team: 'red',  ← Ganti dengan 'red' atau 'blue'
+    //   question: 'Pertanyaan Anda?',
+    //   options: ['Pilihan A', 'Pilihan B', 'Pilihan C', 'Pilihan D'],
+    //   correct: 0  ← 0=A, 1=B, 2=C, 3=D
+    // },
+    
+    const allQuestions = [
+      // Red Team Questions
+      {
+        team: 'red',
+        question: 'Nama gua yang digunakan Nabi Muhammad saw. untuk menyendiri dan merenung adalah',
+        options: ['Gua Tsur', 'Gua Hira', 'Gua Uhud', 'Gua Kahfi'],
+        correct: 1
+      },
+      {
+        team: 'red',
+        question: 'Nabi Muhammad saw. diangkat menjadi Rasul pada usia',
+        options: ['25', '35', '40', '63'],
+        correct: 2
+      },
+      {
+        team: 'red',
+        question: 'Wahyu yang pertama kali diturunkan Allah SWT kepada Nabi Muhammad saw. adalah',
+        options: ['Al-Fatihah ayat 1-7', 'SAl-Ikhlas ayat 1-4', 'Al-Muddassir ayat 1-7', 'Al-Alaq ayat 1-5'],
+        correct: 3
+      },
+      {
+        team: 'red',
+        question: 'wahyu pertama yang diterima Nabi Muhammad saw. adalah perintah untuk',
+        options: ['Berperang', 'Membaca/Belajar', 'Berhaji', 'Berpuasa'],
+        correct: 1
+      },
+      {
+        team: 'red',
+        question: 'Setelah menerima wahyu pertama, Nabi Muhammad saw. merasa gemetar dan meminta diselimuti oleh istrinya yang bernama',
+        options: ['Aisyah', 'Khadijah', 'Hafshah', 'Fatimah'],
+        correct: 1
+      },
+      // Blue Team Questions
+      {
+        team: 'blue',
+        question: 'Tokoh yang meyakinkan Nabi Muhammad saw. bahwa yang datang kepadanya adalah Malaikat Jibril adalah',
+        options: ['Abu Bakar', 'Abu Thalib', 'Waraqah bin Naufal', 'Abdul Muthalib'],
+        correct: 2
+      },
+      {
+        team: 'blue',
+        question: 'Wahyu yang berisi perintah untuk mulai berdakwah kepada umat manusia adalah',
+        options: ['Al-Alaq', 'Al-Muddassir', 'Al-Lahab', 'YAl Maun'],
+        correct: 1
+      },
+      {
+        team: 'blue',
+        question: 'Sahabat dari kalangan lelaki dewasa yang pertama kali masuk Islam adalah',
+        options: ['Ali bin Abi Thalib', 'Utsman bin Affan', 'Abu Bakar Ash-Shiddiq', 'Umar bin Khattab'],
+        correct: 2
+      },
+      {
+        team: 'blue',
+        question: 'Golongan orang-orang yang pertama kali masuk Islam disebut dengan istilah',
+        options: ['Ansar', 'Muhajirin', 'Assabiqunal Awwalun', 'Syuhada'],
+        correct: 2
+      },
+      {
+        team: 'blue',
+        question: 'Apa arti dari kata "Iqra" yang merupakan kata pertama dalam wahyu yang diterima Nabi',
+        options: ['Tulislah', 'Dengarlah', 'Bacalah', 'Berjalanlah'],
+        correct: 2
+      }
+    ];
+
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+
+    function prepareQuestions() {
+      const redQuestions = shuffleArray(allQuestions.filter(q => q.team === 'red'));
+      const blueQuestions = shuffleArray(allQuestions.filter(q => q.team === 'blue'));
+      
+      const paired = [];
+      const numPairs = Math.min(redQuestions.length, blueQuestions.length);
+      
+      for (let i = 0; i < numPairs; i++) {
+        paired.push({
+          red: redQuestions[i],
+          blue: blueQuestions[i]
+        });
+      }
+      
+      return paired;
+    }
+
+    function startGame() {
+      gameState = {
+        currentQuestionIndex: 0,
+        redScore: 0,
+        blueScore: 0,
+        ropePosition: 0,
+        redAnswered: false,
+        blueAnswered: false,
+        questions: prepareQuestions()
+      };
+      
+      document.getElementById('welcome-screen').style.display = 'none';
+      document.getElementById('game-screen').style.display = 'block';
+      document.getElementById('result-screen').style.display = 'none';
+      
+      document.getElementById('total-questions').textContent = gameState.questions.length;
+      
+      updateScoreDisplay();
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const pair = gameState.questions[gameState.currentQuestionIndex];
+      
+      gameState.redAnswered = false;
+      gameState.blueAnswered = false;
+      
+      document.getElementById('current-question').textContent = gameState.currentQuestionIndex + 1;
+      document.getElementById('next-btn').style.display = 'none';
+      
+      document.getElementById('red-feedback').style.display = 'none';
+      document.getElementById('blue-feedback').style.display = 'none';
+      
+      document.getElementById('red-question').textContent = pair.red.question;
+      const redOptionsContainer = document.getElementById('red-options');
+      redOptionsContainer.innerHTML = '';
+      
+      pair.red.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.style.cssText = 'width: 100%; padding: 12px 16px; background: white; border-radius: 12px; text-align: left; font-weight: 600; color: #374151; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #fecaca; cursor: pointer;';
+        btn.innerHTML = `<span style="margin-right: 8px; display: inline-block; width: 32px; height: 32px; border-radius: 50%; background: #ef4444; color: white; text-align: center; line-height: 32px;">${String.fromCharCode(65 + idx)}</span> ${opt}`;
+        btn.onclick = () => answerQuestion('red', idx);
+        redOptionsContainer.appendChild(btn);
+      });
+      
+      document.getElementById('blue-question').textContent = pair.blue.question;
+      const blueOptionsContainer = document.getElementById('blue-options');
+      blueOptionsContainer.innerHTML = '';
+      
+      pair.blue.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.style.cssText = 'width: 100%; padding: 12px 16px; background: white; border-radius: 12px; text-align: left; font-weight: 600; color: #374151; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border: 2px solid #93c5fd; cursor: pointer;';
+        btn.innerHTML = `<span style="margin-right: 8px; display: inline-block; width: 32px; height: 32px; border-radius: 50%; background: #3b82f6; color: white; text-align: center; line-height: 32px;">${String.fromCharCode(65 + idx)}</span> ${opt}`;
+        btn.onclick = () => answerQuestion('blue', idx);
+        blueOptionsContainer.appendChild(btn);
+      });
+    }
+
+    function answerQuestion(team, selectedIndex) {
+      if ((team === 'red' && gameState.redAnswered) || (team === 'blue' && gameState.blueAnswered)) {
+        return;
+      }
+      
+      const pair = gameState.questions[gameState.currentQuestionIndex];
+      const questionData = pair[team];
+      const isCorrect = selectedIndex === questionData.correct;
+      
+      const optionsContainer = document.getElementById(`${team}-options`);
+      const buttons = optionsContainer.querySelectorAll('button');
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === questionData.correct) {
+          btn.classList.add('correct-answer');
+        } else if (idx === selectedIndex && !isCorrect) {
+          btn.classList.add('wrong-answer');
+        }
+      });
+      
+      const feedback = document.getElementById(`${team}-feedback`);
+      feedback.style.display = 'block';
+      
+      if (isCorrect) {
+        feedback.textContent = '✅ BENAR! +1 Poin';
+        feedback.style.color = '#059669';
+        
+        if (team === 'red') {
+          gameState.redScore++;
+          gameState.ropePosition--;
+          animateRope('left');
+        } else {
+          gameState.blueScore++;
+          gameState.ropePosition++;
+          animateRope('right');
+        }
+      } else {
+        feedback.textContent = '❌ SALAH!';
+        feedback.style.color = '#dc2626';
+        
+        if (team === 'red') {
+          gameState.ropePosition++;
+          animateRope('right');
+        } else {
+          gameState.ropePosition--;
+          animateRope('left');
+        }
+      }
+      
+      if (team === 'red') {
+        gameState.redAnswered = true;
+      } else {
+        gameState.blueAnswered = true;
+      }
+      
+      updateScoreDisplay();
+      updateRopeIndicator();
+      
+      if (gameState.redAnswered && gameState.blueAnswered) {
+        setTimeout(() => {
+          if (gameState.currentQuestionIndex < gameState.questions.length - 1) {
+            document.getElementById('next-btn').style.display = 'block';
+          } else {
+            showResult();
+          }
+        }, 500);
+      }
+    }
+
+    function animateRope(direction) {
+      const ropeContainer = document.getElementById('rope-container');
+      
+      ropeContainer.classList.remove('pull-left', 'pull-right');
+      
+      setTimeout(() => {
+        if (direction === 'left') {
+          ropeContainer.classList.add('pull-left');
+          ropeContainer.style.transform = `translateX(${gameState.ropePosition * -20}px)`;
+        } else {
+          ropeContainer.classList.add('pull-right');
+          ropeContainer.style.transform = `translateX(${gameState.ropePosition * -20}px)`;
+        }
+      }, 50);
+    }
+
+    function updateRopeIndicator() {
+      const positions = ['pos-1', 'pos-2', 'pos-3', 'pos-4', 'pos-5'];
+      
+      positions.forEach(pos => {
+        document.getElementById(pos).style.background = '#d1d5db';
+      });
+      
+      let indicatorPos = Math.max(0, Math.min(4, Math.round(gameState.ropePosition + 2)));
+      
+      const posElement = document.getElementById(positions[indicatorPos]);
+      if (indicatorPos < 2) {
+        posElement.style.background = '#ef4444';
+      } else if (indicatorPos > 2) {
+        posElement.style.background = '#3b82f6';
+      } else {
+        posElement.style.background = '#fbbf24';
+      }
+    }
+
+    function updateScoreDisplay() {
+      document.getElementById('red-score').textContent = gameState.redScore;
+      document.getElementById('blue-score').textContent = gameState.blueScore;
+    }
+
+    function nextQuestion() {
+      gameState.currentQuestionIndex++;
+      loadQuestion();
+    }
+
+    function showResult() {
+      document.getElementById('game-screen').style.display = 'none';
+      document.getElementById('result-screen').style.display = 'flex';
+      
+      document.getElementById('final-red-score').textContent = gameState.redScore;
+      document.getElementById('final-blue-score').textContent = gameState.blueScore;
+      
+      const winnerDisplay = document.getElementById('winner-display');
+      
+      if (gameState.redScore > gameState.blueScore) {
+        winnerDisplay.innerHTML = `
+          <div class="celebrate" style="display: inline-block;">
+            <div style="width: 128px; height: 128px; background: linear-gradient(to bottom right, #f87171, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 25px rgba(0,0,0,0.1); margin: 0 auto 16px;">
+              <span style="font-size: 64px;">👦</span>
+            </div>
+          </div>
+          <h3 class="title-font" style="font-size: 28px; color: #dc2626; margin-bottom: 8px;">TIM MERAH MENANG! 🎉</h3>
+          <p style="color: #4b5563;">Selamat kepada Tim Merah!</p>
+        `;
+        createConfetti('red');
+      } else if (gameState.blueScore > gameState.redScore) {
+        winnerDisplay.innerHTML = `
+          <div class="celebrate" style="display: inline-block;">
+            <div style="width: 128px; height: 128px; background: linear-gradient(to bottom right, #60a5fa, #2563eb); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 20px 25px rgba(0,0,0,0.1); margin: 0 auto 16px;">
+              <span style="font-size: 64px;">👧</span>
+            </div>
+          </div>
+          <h3 class="title-font" style="font-size: 28px; color: #2563eb; margin-bottom: 8px;">TIM BIRU MENANG! 🎉</h3>
+          <p style="color: #4b5563;">Selamat kepada Tim Biru!</p>
+        `;
+        createConfetti('blue');
+      } else {
+        winnerDisplay.innerHTML = `
+          <div style="display: flex; justify-content: center; gap: 16px; margin-bottom: 16px;">
+            <div class="celebrate" style="display: inline-block;">
+              <div style="width: 96px; height: 96px; background: linear-gradient(to bottom right, #f87171, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1);">
+                <span style="font-size: 48px;">👦</span>
+              </div>
+            </div>
+            <div class="celebrate" style="display: inline-block; animation-delay: 0.2s;">
+              <div style="width: 96px; height: 96px; background: linear-gradient(to bottom right, #60a5fa, #2563eb); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px rgba(0,0,0,0.1);">
+                <span style="font-size: 48px;">👧</span>
+              </div>
+            </div>
+          </div>
+          <h3 class="title-font" style="font-size: 28px; color: #9333ea; margin-bottom: 8px;">SERI! 🤝</h3>
+          <p style="color: #4b5563;">Kedua tim bermain dengan sangat baik!</p>
+        `;
+        createConfetti('both');
+      }
+    }
+
+    function createConfetti(winner) {
+      const container = document.getElementById('confetti-container');
+      container.innerHTML = '';
+      
+      const colors = winner === 'red' ? ['#ef4444', '#fbbf24', '#f97316'] :
+                     winner === 'blue' ? ['#3b82f6', '#06b6d4', '#8b5cf6'] :
+                     ['#ef4444', '#3b82f6', '#fbbf24', '#10b981', '#f97316'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(confetti);
+      }
+    }
+
+    function restartGame() {
+      document.getElementById('result-screen').style.display = 'none';
+      document.getElementById('welcome-screen').style.display = 'flex';
+      document.getElementById('confetti-container').innerHTML = '';
+      
+      document.getElementById('rope-container').style.transform = 'translateX(0)';
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ca160825682a8e9',t:'MTc3MDQ1MTQ3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
